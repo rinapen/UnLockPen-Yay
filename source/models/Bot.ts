@@ -1,0 +1,24 @@
+import mongoose, { Document, Schema } from "mongoose";
+import * as dotenv from "dotenv";
+
+dotenv.config();
+
+interface IBot extends Document {
+  user_id: string;
+  email: string;
+  password: string;
+  access_token: string;
+  uuid: string;
+}
+
+const userSchema = new Schema({
+  user_id: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  access_token: { type: String, required: true },
+  uuid: { type: String, required: true },
+});
+
+const BotModel = mongoose.model<IBot>(`${process.env.DB_USER}.Bot`, userSchema);
+
+export { IBot, BotModel };

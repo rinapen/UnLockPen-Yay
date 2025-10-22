@@ -1,0 +1,1428 @@
+body {
+    background-color: #0a0a0a;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(139, 0, 0, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(139, 0, 0, 0.03) 0%, transparent 50%),
+      linear-gradient(135deg, #1a0a0a 0%, #0f0f0f 30%, #0a0a1a 70%, #1a0a0a 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(139, 0, 0, 0.01) 2px,
+        rgba(139, 0, 0, 0.01) 4px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(139, 0, 0, 0.01) 2px,
+        rgba(139, 0, 0, 0.01) 4px
+      );
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  
+  /* コンテナ全体 */
+  .container.menupanel {
+    background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+    border: 2px solid #8b0000;
+    box-shadow: 
+      0 0 15px rgba(139, 0, 0, 0.4),
+      0 0 25px rgba(139, 0, 0, 0.2),
+      inset 0 0 15px rgba(139, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 32px;
+    width: 840px;
+    margin: 50px auto;
+    position: relative;
+    backdrop-filter: blur(10px);
+  }
+
+  .container.menupanel::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #8b0000, #a52a2a, #8b0000, #654321, #8b0000);
+    border-radius: 22px;
+    z-index: -1;
+    animation: borderGlow 6s linear infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes borderGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* ヘッダー */
+  header h2 {
+    font-size: 1.8rem;
+    color: #cd5c5c;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 
+      0 0 8px rgba(205, 92, 92, 0.6),
+      0 0 15px rgba(205, 92, 92, 0.4);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    letter-spacing: 2px;
+    animation: textFlicker 4s infinite alternate;
+  }
+
+  @keyframes textFlicker {
+    0%, 100% { 
+      text-shadow: 
+        0 0 8px rgba(205, 92, 92, 0.6),
+        0 0 15px rgba(205, 92, 92, 0.4);
+    }
+    50% { 
+      text-shadow: 
+        0 0 5px rgba(205, 92, 92, 0.4),
+        0 0 10px rgba(205, 92, 92, 0.3);
+    }
+  }
+  
+  /* トグルボタン */
+  #theme-toggle {
+    background: transparent;
+    color: #cd5c5c;
+    border: 1px solid #8b0000;
+    border-radius: 6px;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  #theme-toggle:hover {
+    color: #a52a2a;
+    border-color: #a52a2a;
+    box-shadow: 0 0 8px rgba(139, 0, 0, 0.3);
+  }
+  
+  /* ラジオボタン */
+  .form-check-input:checked {
+    background-color: #8b0000;
+    border-color: #8b0000;
+  }
+
+  label.form-check-label {
+    color: #ddd;
+  }
+  
+  /* 入力 */
+  input, select {
+    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+    color: #cd5c5c;
+    border: 2px solid #8b0000;
+    border-radius: 12px;
+    padding: 12px 16px;
+    width: 100%;
+    box-shadow: 
+      0 0 8px rgba(139, 0, 0, 0.2),
+      inset 0 0 8px rgba(139, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    border-color: #a52a2a;
+    box-shadow: 
+      0 0 12px rgba(139, 0, 0, 0.4),
+      0 0 20px rgba(139, 0, 0, 0.2),
+      inset 0 0 12px rgba(139, 0, 0, 0.1);
+    transform: translateY(-1px);
+  }
+
+  input::placeholder {
+    color: #888;
+    font-style: italic;
+  }
+  
+  /* ボタン */
+  .btn-primary, .btn-cyber, .btn:disabled {
+    background: linear-gradient(145deg, #8b0000, #654321);
+    color: #fff;
+    border: 2px solid #8b0000;
+    font-weight: bold;
+    border-radius: 12px;
+    padding: 12px 0;
+    width: 100%;
+    box-shadow: 
+      0 0 12px rgba(139, 0, 0, 0.4),
+      0 0 20px rgba(139, 0, 0, 0.2),
+      inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .btn-primary::before, .btn-cyber::before, .btn:disabled::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-primary:hover, .btn-cyber:hover, .btn:disabled:hover {
+    background: linear-gradient(145deg, #a52a2a, #8b0000);
+    box-shadow: 
+      0 0 15px rgba(139, 0, 0, 0.5),
+      0 0 25px rgba(139, 0, 0, 0.3),
+      inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .btn-primary:hover::before, .btn-cyber:hover::before, .btn:disabled:hover::before {
+    left: 100%;
+  }
+  
+  /* フィールド */
+  fieldset {
+    background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+    border: 2px solid #8b0000;
+    border-radius: 15px;
+    padding: 2rem;
+    color: #cd5c5c;
+    box-shadow: 
+      0 0 12px rgba(139, 0, 0, 0.2),
+      inset 0 0 15px rgba(139, 0, 0, 0.05);
+    position: relative;
+    backdrop-filter: blur(5px);
+  }
+
+  fieldset::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #8b0000, #a52a2a, #8b0000, #654321);
+    border-radius: 17px;
+    z-index: -1;
+    opacity: 0.5;
+    animation: fieldsetBorderGlow 8s linear infinite;
+  }
+
+  @keyframes fieldsetBorderGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* 見出し */
+  .section-title, legend {
+    color: #cd5c5c;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    text-shadow: 
+      0 0 8px rgba(205, 92, 92, 0.6),
+      0 0 15px rgba(205, 92, 92, 0.4);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    animation: legendGlow 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes legendGlow {
+    0% { 
+      text-shadow: 
+        0 0 8px rgba(205, 92, 92, 0.6),
+        0 0 15px rgba(205, 92, 92, 0.4);
+    }
+    100% { 
+      text-shadow: 
+        0 0 10px rgba(205, 92, 92, 0.8),
+        0 0 18px rgba(205, 92, 92, 0.6);
+    }
+  }
+  
+  .text-cyber {
+    color: #cd5c5c;
+    text-shadow: 0 0 6px rgba(205, 92, 92, 0.6);
+  }
+
+  .search-panel {
+    background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+    box-shadow: 
+      0 0 15px rgba(139, 0, 0, 0.3),
+      0 0 25px rgba(139, 0, 0, 0.1),
+      inset 0 0 15px rgba(139, 0, 0, 0.05);
+    padding: 24px;
+    border-radius: 20px;
+    margin: 0 auto;
+    border: 2px solid #8b0000;
+    position: relative;
+    backdrop-filter: blur(10px);
+  }
+
+  .search-panel::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #8b0000, #a52a2a, #8b0000, #654321);
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0.4;
+    animation: searchPanelBorderGlow 6s linear infinite;
+  }
+
+  @keyframes searchPanelBorderGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .user-list {
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 15px;
+    border-top: 2px solid #8b0000;
+    background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+    border-radius: 0 0 15px 15px;
+    box-shadow: inset 0 0 15px rgba(139, 0, 0, 0.1);
+  }
+  
+  .neon-panel {
+    background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+    border: 2px solid #8b0000;
+    box-shadow: 
+      0 0 15px rgba(139, 0, 0, 0.4),
+      0 0 25px rgba(139, 0, 0, 0.2),
+      inset 0 0 15px rgba(139, 0, 0, 0.1);
+    border-radius: 15px;
+    color: #fff;
+    position: relative;
+    backdrop-filter: blur(5px);
+  }
+
+  .neon-panel::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #8b0000, #a52a2a, #8b0000, #654321);
+    border-radius: 17px;
+    z-index: -1;
+    opacity: 0.4;
+    animation: neonPanelBorderGlow 8s linear infinite;
+  }
+
+  @keyframes neonPanelBorderGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .bg-cyber-secondary {
+    background-color: #8b0000;
+    color: #fff;
+  }
+  
+  .neon-select {
+    background: linear-gradient(145deg, #1f1f1f, #0f0f0f);
+    border: 2px solid #8b0000;
+    color: #cd5c5c;
+    border-radius: 12px;
+    box-shadow: 
+      0 0 8px rgba(139, 0, 0, 0.2),
+      inset 0 0 8px rgba(139, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .neon-select:focus {
+    outline: none;
+    border-color: #a52a2a;
+    box-shadow: 
+      0 0 12px rgba(139, 0, 0, 0.4),
+      0 0 20px rgba(139, 0, 0, 0.2),
+      inset 0 0 12px rgba(139, 0, 0, 0.1);
+  }
+
+  .text-cyber {
+    color: #cd5c5c !important;
+  }
+  
+  .btn-cyber {
+    background: linear-gradient(145deg, #8b0000, #654321);
+    color: #fff;
+    font-weight: bold;
+    border: 2px solid #8b0000;
+    border-radius: 12px;
+    box-shadow: 
+      0 0 12px rgba(139, 0, 0, 0.4),
+      0 0 20px rgba(139, 0, 0, 0.2),
+      inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .btn-cyber::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-cyber:hover {
+    background: linear-gradient(145deg, #a52a2a, #8b0000);
+    box-shadow: 
+      0 0 15px rgba(139, 0, 0, 0.5),
+      0 0 25px rgba(139, 0, 0, 0.3),
+      inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .btn-cyber:hover::before {
+    left: 100%;
+  }
+    
+  .participant-item {
+    border-bottom: 1px solid #444; /* 仕切り線 */
+  }
+  
+  .participant-avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 8px; /* ✅ 角丸四角にする */
+  }
+  
+  .badge {
+    border-radius: 6px !important; /* ← 丸みを抑えて四角に近づける */
+    padding: 0.3em 0.6em;
+    font-size: 0.75rem;
+  }
+  
+
+  .participant-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+  }
+  .choice-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  
+  .choice-option {
+    padding: 12px 24px;
+    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+    border: 2px solid #8b0000;
+    border-radius: 15px;
+    color: #cd5c5c;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: center;
+    min-width: 120px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+      0 0 6px rgba(139, 0, 0, 0.3),
+      inset 0 0 8px rgba(139, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .choice-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(139, 0, 0, 0.1), transparent);
+    transition: left 0.6s;
+  }
+  
+  .choice-option:hover {
+    background: linear-gradient(145deg, #2a1a1a, #1f0f0f);
+    box-shadow: 
+      0 0 12px rgba(139, 0, 0, 0.4),
+      0 0 20px rgba(139, 0, 0, 0.2),
+      inset 0 0 12px rgba(139, 0, 0, 0.2);
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  .choice-option:hover::before {
+    left: 100%;
+  }
+  
+  .choice-option.active {
+    background: linear-gradient(145deg, #8b0000, #654321);
+    color: #fff;
+    box-shadow: 
+      0 0 15px rgba(139, 0, 0, 0.5),
+      0 0 25px rgba(139, 0, 0, 0.3),
+      inset 0 0 15px rgba(139, 0, 0, 0.3);
+    font-weight: 700;
+    transform: scale(1.05);
+  }
+
+  .bot-app-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin: 2rem auto;
+  }
+  
+  .search-panel,
+  .result-panel {
+    width: 100%;
+    max-width: 720px;
+  }
+  .user-list {
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 10px;
+    border-top: 1px solid #ff0040;
+    scrollbar-width: thin;
+    scrollbar-color: #ff0040 #111; /* Firefox用 */
+  }
+  
+  /* Chrome, Edge, Safari対応 */
+  .user-list::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .user-list::-webkit-scrollbar-track {
+    background: #111;
+    border-radius: 10px;
+  }
+  
+  .user-list::-webkit-scrollbar-thumb {
+    background: #ff0040;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px #ff0040;
+  }
+  
+  .user-list::-webkit-scrollbar-thumb:hover {
+    background: #ff1a5c;
+  }
+  
+  @media (min-width: 768px) {
+    .bot-app-wrapper {
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+    }
+  
+    .search-panel,
+    .result-panel {
+      width: 760px;
+    }
+  }
+  
+  .badge.bg-pink { background-color: #ff69b4; color: white; }
+  .badge.bg-blue { background-color: #007bff; color: white; }
+  .badge.bg-green { background-color: #28a745; color: white; }
+  .badge.bg-gray { background-color: #6c757d; color: white; }
+
+  /* 参加者ビジュアル一覧 */
+.joined-user-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  padding: 16px;
+}
+
+.user-bubble {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px;
+  text-align: center;
+  color: #fff;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 72px;
+  height: 72px;
+}
+
+.user-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #ff0040;
+  object-fit: cover;
+}
+
+.mic-icon {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  background: #111;
+  color: #f00;
+  border-radius: 50%;
+  padding: 4px;
+  font-size: 12px;
+}
+
+
+.badge.crown {
+  color: #ff69b4;
+}
+
+.badge.mod {
+  color: #00f0ff;
+}
+
+.username {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  word-break: break-word;
+}
+
+.mic-icon.muted {
+  color: #ff4d4f;
+  display: inline-block;
+}
+.mic-icon:not(.muted) {
+  display: none;
+}
+
+.joined-user-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+}
+
+#idInput {
+  background-color: #111;        /* 暗い背景 */
+  color: #ff0040;                /* 明るい文字 */
+  border: 1px solid #ff0040;     /* サイバーな枠線 */
+  caret-color: #ff0040;          /* 入力カーソルも明るく */
+}
+
+#idInput::placeholder {
+  color: #666;                   /* プレースホルダーは控えめに */
+}
+
+.cyber-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.loader-border {
+  border: 2px solid #ff0040;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  background: #0f0f0f;
+  box-shadow: 0 0 12px #ff0040;
+  text-align: center;
+}
+
+.loader-text {
+  font-size: 1.5rem;
+  color: #ff0040;
+  margin-bottom: 1rem;
+  font-family: 'Courier New', Courier, monospace;
+  animation: flicker 1.5s infinite alternate;
+}
+
+.loader-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background-color: #ff0040;
+  border-radius: 50%;
+  animation: blink 1.4s infinite both;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+.cyber-alert {
+  background: #1c1c1c;
+  color: #ff4d6d;
+  border: 2px solid #ff4d6d;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: 0 0 10px #ff4d6d;
+  font-family: 'Courier New', Courier, monospace;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 5px #ff4d6d; }
+  50% { box-shadow: 0 0 20px #ff4d6d; }
+  100% { box-shadow: 0 0 5px #ff4d6d; }
+}
+
+.cyber-error-alert {
+  background: #1a1a1a;
+  color: #ff6b81;
+  border: 2px solid #ff6b81;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: 0 0 12px #ff6b81;
+  font-family: 'Courier New', Courier, monospace;
+  animation: flicker 1.5s infinite alternate;
+}
+
+@keyframes flicker {
+  from { opacity: 1; }
+  to { opacity: 0.8; }
+}
+
+
+.cyber-info-alert {
+  background: #1a1a1a;
+  color: #ff0040;
+  border: 2px solid #ff0040;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: 0 0 12px #ff0040;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.border-cyber {
+  border: 2px solid #ff0040;
+}
+
+.btn-cyber {
+  background-color: #ff0040;
+  color: #fff;
+}
+.emoji-btn {
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+}
+
+#emoji-buttons button {
+  font-size: 2rem;
+  min-width: 3rem;
+  padding: 0.5rem 1rem;
+}
+
+<<<<<<< HEAD
+/* ツールアイコンのスタイリング */
+.tool-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  border: 3px solid #8b0000;
+  box-shadow: 
+    0 0 12px rgba(139, 0, 0, 0.4),
+    0 0 20px rgba(139, 0, 0, 0.2),
+    inset 0 0 8px rgba(139, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: 
+    drop-shadow(0 0 8px rgba(139, 0, 0, 0.6))
+    brightness(1.05)
+    contrast(1.1);
+  position: relative;
+  background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+}
+
+.tool-icon::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(45deg, #8b0000, #a52a2a, #8b0000, #654321);
+  border-radius: 15px;
+  z-index: -1;
+  animation: iconBorderGlow 4s linear infinite;
+  opacity: 0.7;
+}
+
+.tool-icon:hover {
+  transform: scale(1.1) rotate(3deg);
+  box-shadow: 
+    0 0 18px rgba(139, 0, 0, 0.5),
+    0 0 30px rgba(139, 0, 0, 0.3),
+    inset 0 0 12px rgba(139, 0, 0, 0.3);
+  filter: 
+    drop-shadow(0 0 12px rgba(139, 0, 0, 0.8))
+    brightness(1.1)
+    contrast(1.2);
+}
+
+@keyframes iconBorderGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* アイコンコンテナのスタイリング */
+.icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(139, 0, 0, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: iconGlowPulse 4s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes iconGlowPulse {
+  0% { 
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.4;
+  }
+  100% { 
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* 赤いサイバーテーマの追加スタイル */
+.text-red-cyber {
+  color: #cd5c5c;
+  text-shadow: 0 0 8px rgba(205, 92, 92, 0.6);
+}
+
+.bg-red-cyber {
+  background: linear-gradient(135deg, #8b0000, #654321);
+  box-shadow: 0 0 15px rgba(139, 0, 0, 0.4);
+}
+
+.border-red-cyber {
+  border: 2px solid #8b0000;
+  box-shadow: 0 0 8px rgba(139, 0, 0, 0.3);
+}
+
+/* アニメーション効果 */
+@keyframes redPulse {
+  0% { box-shadow: 0 0 5px rgba(139, 0, 0, 0.4); }
+  50% { box-shadow: 0 0 15px rgba(139, 0, 0, 0.6), 0 0 25px rgba(139, 0, 0, 0.4); }
+  100% { box-shadow: 0 0 5px rgba(139, 0, 0, 0.4); }
+}
+
+.red-pulse {
+  animation: redPulse 4s infinite;
+}
+
+/* グリッチ効果 */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(-1px, -1px); }
+  60% { transform: translate(1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+  100% { transform: translate(0); }
+}
+
+.glitch-effect {
+  animation: glitch 2s infinite;
+  color: #cd5c5c;
+  text-shadow: 
+    1px 0 rgba(205, 92, 92, 0.6),
+    -1px 0 rgba(205, 92, 92, 0.6),
+    0 1px rgba(205, 92, 92, 0.6),
+    0 -1px rgba(205, 92, 92, 0.6);
+}
+
+/* 鬼滅の刃 呼吸法UI */
+.breathing-btn {
+  padding: 12px 20px;
+  border: 2px solid;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  min-width: 140px;
+  margin: 4px;
+}
+
+.breathing-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.breathing-btn:hover::before {
+  left: 100%;
+}
+
+/* 水の呼吸 - 青色 */
+.water-breathing {
+  background: linear-gradient(145deg, #1e3a8a, #3b82f6);
+  border-color: #3b82f6;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+.water-breathing:hover {
+  background: linear-gradient(145deg, #3b82f6, #60a5fa);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 炎の呼吸 - 赤色 */
+.fire-breathing {
+  background: linear-gradient(145deg, #dc2626, #ef4444);
+  border-color: #ef4444;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+}
+
+.fire-breathing:hover {
+  background: linear-gradient(145deg, #ef4444, #f87171);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 風の呼吸 - 緑色 */
+.wind-breathing {
+  background: linear-gradient(145deg, #059669, #10b981);
+  border-color: #10b981;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+.wind-breathing:hover {
+  background: linear-gradient(145deg, #10b981, #34d399);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 岩の呼吸 - 茶色 */
+.stone-breathing {
+  background: linear-gradient(145deg, #92400e, #d97706);
+  border-color: #d97706;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(217, 119, 6, 0.4);
+}
+
+.stone-breathing:hover {
+  background: linear-gradient(145deg, #d97706, #f59e0b);
+  box-shadow: 0 0 20px rgba(217, 119, 6, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 雷の呼吸 - 黄色 */
+.thunder-breathing {
+  background: linear-gradient(145deg, #ca8a04, #eab308);
+  border-color: #eab308;
+  color: #000;
+  box-shadow: 0 0 15px rgba(234, 179, 8, 0.4);
+}
+
+.thunder-breathing:hover {
+  background: linear-gradient(145deg, #eab308, #facc15);
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 霞の呼吸 - 白色 */
+.mist-breathing {
+  background: linear-gradient(145deg, #6b7280, #9ca3af);
+  border-color: #9ca3af;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(156, 163, 175, 0.4);
+}
+
+.mist-breathing:hover {
+  background: linear-gradient(145deg, #9ca3af, #d1d5db);
+  box-shadow: 0 0 20px rgba(156, 163, 175, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 花の呼吸 - 桃色 */
+.flower-breathing {
+  background: linear-gradient(145deg, #be185d, #ec4899);
+  border-color: #ec4899;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+}
+
+.flower-breathing:hover {
+  background: linear-gradient(145deg, #ec4899, #f472b6);
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 蛇の呼吸 - 紫色 */
+.snake-breathing {
+  background: linear-gradient(145deg, #7c3aed, #a855f7);
+  border-color: #a855f7;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+}
+
+.snake-breathing:hover {
+  background: linear-gradient(145deg, #a855f7, #c084fc);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 恋の呼吸 - ピンク色 */
+.love-breathing {
+  background: linear-gradient(145deg, #db2777, #f472b6);
+  border-color: #f472b6;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(244, 114, 182, 0.4);
+}
+
+.love-breathing:hover {
+  background: linear-gradient(145deg, #f472b6, #fbbf24);
+  box-shadow: 0 0 20px rgba(244, 114, 182, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 獣の呼吸 - 灰色 */
+.beast-breathing {
+  background: linear-gradient(145deg, #374151, #6b7280);
+  border-color: #6b7280;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(107, 114, 128, 0.4);
+}
+
+.beast-breathing:hover {
+  background: linear-gradient(145deg, #6b7280, #9ca3af);
+  box-shadow: 0 0 20px rgba(107, 114, 128, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 音の呼吸 - 金色 */
+.sound-breathing {
+  background: linear-gradient(145deg, #b45309, #f59e0b);
+  border-color: #f59e0b;
+  color: #000;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+.sound-breathing:hover {
+  background: linear-gradient(145deg, #f59e0b, #fbbf24);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 月の呼吸 - 黒色 */
+.moon-breathing {
+  background: linear-gradient(145deg, #1f2937, #374151);
+  border-color: #374151;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(55, 65, 81, 0.4);
+}
+
+.moon-breathing:hover {
+  background: linear-gradient(145deg, #374151, #4b5563);
+  box-shadow: 0 0 20px rgba(55, 65, 81, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 日の呼吸 - 橙色 */
+.sun-breathing {
+  background: linear-gradient(145deg, #ea580c, #f97316);
+  border-color: #f97316;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+}
+
+.sun-breathing:hover {
+  background: linear-gradient(145deg, #f97316, #fb923c);
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 技ボタン */
+.technique-btn {
+  padding: 10px 16px;
+  border: 2px solid;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+  margin: 3px;
+}
+
+.technique-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.4s;
+}
+
+.technique-btn:hover::before {
+  left: 100%;
+}
+
+.technique-btn:hover {
+  transform: translateY(-1px) scale(1.05);
+}
+
+/* 呼吸法別の技ボタン色 */
+.technique-btn.water { background: linear-gradient(145deg, #1e3a8a, #3b82f6); border-color: #3b82f6; color: #fff; }
+.technique-btn.fire { background: linear-gradient(145deg, #dc2626, #ef4444); border-color: #ef4444; color: #fff; }
+.technique-btn.wind { background: linear-gradient(145deg, #059669, #10b981); border-color: #10b981; color: #fff; }
+.technique-btn.stone { background: linear-gradient(145deg, #92400e, #d97706); border-color: #d97706; color: #fff; }
+.technique-btn.thunder { background: linear-gradient(145deg, #ca8a04, #eab308); border-color: #eab308; color: #000; }
+.technique-btn.mist { background: linear-gradient(145deg, #6b7280, #9ca3af); border-color: #9ca3af; color: #fff; }
+.technique-btn.flower { background: linear-gradient(145deg, #be185d, #ec4899); border-color: #ec4899; color: #fff; }
+.technique-btn.snake { background: linear-gradient(145deg, #7c3aed, #a855f7); border-color: #a855f7; color: #fff; }
+.technique-btn.love { background: linear-gradient(145deg, #db2777, #f472b6); border-color: #f472b6; color: #fff; }
+.technique-btn.beast { background: linear-gradient(145deg, #374151, #6b7280); border-color: #6b7280; color: #fff; }
+.technique-btn.sound { background: linear-gradient(145deg, #b45309, #f59e0b); border-color: #f59e0b; color: #000; }
+.technique-btn.moon { background: linear-gradient(145deg, #1f2937, #374151); border-color: #374151; color: #fff; }
+.technique-btn.sun { background: linear-gradient(145deg, #ea580c, #f97316); border-color: #f97316; color: #fff; }
+
+/* アニメーション効果 */
+@keyframes techniqueGlow {
+  0% { box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); }
+  50% { box-shadow: 0 0 15px rgba(0, 0, 0, 0.6); }
+  100% { box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); }
+}
+
+.technique-btn.playing {
+  animation: techniqueGlow 0.5s ease-in-out;
+=======
+/* 絵文字設定UI */
+.emoji-setup-form {
+  background: rgba(17, 17, 17, 0.8);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.emoji-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.emoji-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.3s ease;
+}
+
+.emoji-item:hover {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: rgba(255, 215, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.emoji-display {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.emoji-remove-btn {
+  background: rgba(255, 107, 129, 0.2);
+  border: 1px solid rgba(255, 107, 129, 0.4);
+  color: #ff6b81;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.emoji-remove-btn:hover {
+  background: rgba(255, 107, 129, 0.3);
+  border-color: rgba(255, 107, 129, 0.6);
+  color: #ff6b81;
+}
+
+.preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.preset-buttons .btn {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  color: #ffd700;
+  transition: all 0.3s ease;
+}
+
+.preset-buttons .btn:hover {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: rgba(255, 215, 0, 0.5);
+  color: #ffd700;
+  transform: translateY(-1px);
+}
+
+/* 絵文字入力フィールド */
+#emojiInput {
+  background: rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(255, 215, 0, 0.3) !important;
+  color: #ffd700 !important;
+  border-radius: 8px;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+#emojiInput:focus {
+  border-color: rgba(255, 215, 0, 0.6) !important;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  outline: none;
+}
+
+#emojiInput::placeholder {
+  color: rgba(255, 215, 0, 0.5) !important;
+}
+
+/* 絵文字追加ボタン */
+#addEmojiBtn {
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  color: #000;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+#addEmojiBtn:hover {
+  background: linear-gradient(45deg, #ffed4e, #ffd700);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+#addEmojiBtn:disabled {
+  background: #666;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* カスタムプリセット保存 */
+.custom-preset-save {
+  background: rgba(17, 17, 17, 0.6);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+#presetNameInput {
+  background: rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(255, 215, 0, 0.3) !important;
+  color: #ffd700 !important;
+  border-radius: 8px;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+#presetNameInput:focus {
+  border-color: rgba(255, 215, 0, 0.6) !important;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  outline: none;
+}
+
+#presetNameInput::placeholder {
+  color: rgba(255, 215, 0, 0.5) !important;
+}
+
+#savePresetBtn {
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  color: #000;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+#savePresetBtn:hover {
+  background: linear-gradient(45deg, #ffed4e, #ffd700);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+/* 保存されたプリセット一覧 */
+.saved-presets {
+  background: rgba(17, 17, 17, 0.6);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.custom-presets-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.custom-preset-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.custom-preset-item:hover {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: rgba(255, 215, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.preset-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.preset-name {
+  font-weight: bold;
+  color: #ffd700;
+  font-size: 1rem;
+}
+
+.preset-count {
+  color: rgba(255, 215, 0, 0.7);
+  font-size: 0.9rem;
+}
+
+.preset-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.load-preset-btn {
+  background: rgba(0, 123, 255, 0.2);
+  border: 1px solid rgba(0, 123, 255, 0.4);
+  color: #007bff;
+  transition: all 0.3s ease;
+}
+
+.load-preset-btn:hover {
+  background: rgba(0, 123, 255, 0.3);
+  border-color: rgba(0, 123, 255, 0.6);
+  color: #007bff;
+}
+
+.delete-preset-btn {
+  background: rgba(220, 53, 69, 0.2);
+  border: 1px solid rgba(220, 53, 69, 0.4);
+  color: #dc3545;
+  transition: all 0.3s ease;
+}
+
+.delete-preset-btn:hover {
+  background: rgba(220, 53, 69, 0.3);
+  border-color: rgba(220, 53, 69, 0.6);
+  color: #dc3545;
+>>>>>>> e9045b0eba8400a3564ee5a0bc7a01d2a7e361a2
+}

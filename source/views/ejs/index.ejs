@@ -1,0 +1,135 @@
+<div id="preJoinView">
+  <div class="container menupanel">
+    <header class="d-flex justify-content-between align-items-center mb-3">
+      <div class="d-flex align-items-center">
+        <div class="icon-container me-4">
+          <img src="/assets/image/icon.png" alt="ツールアイコン" class="tool-icon red-pulse">
+          <div class="icon-glow"></div>
+        </div>
+        <h2 class="text-red-cyber mb-0 glitch-effect">りなぺん</h2>
+      </div>
+    </header>
+
+    <main class="search-panel">
+
+      <fieldset class="mb-4">
+        <legend class="section-title">検索対象</legend>
+        <div class="choice-group" id="id-type-choice">
+          <div class="choice-option" data-value="user_id">ユーザーID</div>
+          <div class="choice-option" data-value="conference_id">通話ID</div>
+        </div>
+        <input type="hidden" name="id_type" id="idTypeHidden" value="user_id" />
+      </fieldset>
+      
+      <fieldset class="mb-4">
+        <legend class="section-title">BOTタイプ</legend>
+        <div class="choice-group" id="bot-type-choice">
+          <div class="choice-option" data-value="fuck">潜入</div>
+          <div class="choice-option" data-value="jaki">障がい者共</div>
+          <div class="choice-option" data-value="bankai">卍解</div>
+          <div class="choice-option" data-value="manabun">マナブン</div>
+          <div class="choice-option" data-value="makino">俺様まきの様</div>
+          <div class="choice-option" data-value="gojo">無量空処</div>
+          <div class="choice-option" data-value="wiru">伏魔御廚子</div>
+          <div class="choice-option" data-value="music">アメイジング</div>
+          <div class="choice-option" data-value="shingeki">進撃のボット</div>
+          <div class="choice-option" data-value="eden">エデンパチンコ</div>
+          <div class="choice-option" data-value="kimetsu">鬼滅</div>
+        </div>
+        <input type="hidden" name="bot_type" id="botTypeHidden" />
+      </fieldset>
+      
+
+      <div class="mb-3">
+        <label for="idInput" class="form-label text-red-cyber">🎯 IDを入力</label>
+        <input type="text" class="form-control border-red-cyber" id="idInput" placeholder="例：123456" disabled>
+      </div>
+
+      <!-- 音楽ファイルアップロード機能 -->
+      <fieldset class="mb-4">
+        <legend class="section-title">音楽ファイル設定</legend>
+        <div class="mb-3">
+          <label for="musicFile" class="form-label text-red-cyber">
+            <i class="fas fa-music"></i> カスタム音楽ファイルをアップロード (音声・動画ファイル対応)
+          </label>
+                      <input type="file" class="form-control" id="musicFile" accept=".wav,.m4a,.mp3,.mp4,.mov,.avi,.mkv,.wmv,.flv,.webm,audio/wav,audio/m4a,audio/mp3,audio/mpeg,video/mp4,video/mov,video/quicktime,video/avi,video/mkv,video/wmv,video/flv,video/webm" />
+          <div class="form-text text-light">現在のファイル: <span id="currentMusicFile">honkowa.m4a (デフォルト)</span></div>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-cyber border-red-cyber" id="uploadMusicBtn" disabled>
+            <i class="fas fa-upload"></i> アップロード
+          </button>
+          <button type="button" class="btn btn-cyber border-red-cyber" id="resetMusicBtn">
+            <i class="fas fa-undo"></i> デフォルトに戻す
+          </button>
+        </div>
+      </fieldset>
+
+      <!-- 音量調整機能 -->
+      <fieldset class="mb-4">
+        <legend class="section-title">音量設定</legend>
+        <div class="mb-3">
+          <label for="volumeSlider" class="form-label text-red-cyber">
+            <i class="fas fa-volume-up"></i> BOT音量調整
+          </label>
+          <div class="d-flex align-items-center gap-3">
+            <i class="fas fa-volume-mute text-muted"></i>
+                         <input type="range" class="form-range" id="volumeSlider" min="0" max="1000" value="1000" />
+             <i class="fas fa-volume-up text-red-cyber"></i>
+             <span id="volumeValue" class="text-red-cyber fw-bold">1000</span>
+          </div>
+          <div class="form-text text-light">BOTの音声出力音量を調整できます</div>
+        </div>
+      </fieldset>
+
+      <div class="text-center mb-4">
+        <button type="submit" class="btn btn-primary btn-cyber bg-red-cyber w-100" id="searchButton" disabled>
+          <i class="fas fa-search"></i>検索
+        </button>
+      </div>
+
+      <div id="result" class="mt-4"></div>
+        <div id="fuck-bot-ui" style="display: none;" class="mt-4 text-center">
+          <h4 class="mb-3 text-red-cyber">絵文字送信モード</h4>
+          <div id="emoji-buttons" class="d-flex justify-content-center gap-2 flex-wrap">
+            <!-- JSでボタンを追加します -->
+          </div>
+        </div>
+
+        <!-- 鬼滅の刃 呼吸法UI -->
+        <div id="kimetsu-bot-ui" style="display: none;" class="mt-4">
+          <h4 class="mb-3 text-red-cyber text-center">鬼滅の刃 呼吸法モード</h4>
+          
+          <!-- 呼吸法選択ボタン -->
+          <div class="breathing-selection mb-4">
+            <h5 class="text-red-cyber mb-3">呼吸法を選択してください</h5>
+            <div class="breathing-buttons d-flex flex-wrap justify-content-center gap-2">
+              <button class="breathing-btn water-breathing" data-breathing="water">水の呼吸</button>
+              <button class="breathing-btn fire-breathing" data-breathing="fire">炎の呼吸</button>
+              <button class="breathing-btn wind-breathing" data-breathing="wind">風の呼吸</button>
+              <button class="breathing-btn stone-breathing" data-breathing="stone">岩の呼吸</button>
+              <button class="breathing-btn thunder-breathing" data-breathing="thunder">雷の呼吸</button>
+              <button class="breathing-btn mist-breathing" data-breathing="mist">霞の呼吸</button>
+              <button class="breathing-btn flower-breathing" data-breathing="flower">花の呼吸</button>
+              <button class="breathing-btn snake-breathing" data-breathing="snake">蛇の呼吸</button>
+              <button class="breathing-btn love-breathing" data-breathing="love">恋の呼吸</button>
+              <button class="breathing-btn beast-breathing" data-breathing="beast">獣の呼吸</button>
+              <button class="breathing-btn sound-breathing" data-breathing="sound">音の呼吸</button>
+              <button class="breathing-btn moon-breathing" data-breathing="moon">月の呼吸</button>
+              <button class="breathing-btn sun-breathing" data-breathing="sun">日の呼吸</button>
+            </div>
+          </div>
+
+          <!-- 技選択ボタン -->
+          <div id="technique-selection" style="display: none;">
+            <h5 class="text-red-cyber mb-3" id="selected-breathing-title">選択された呼吸法</h5>
+            <div id="technique-buttons" class="d-flex flex-wrap justify-content-center gap-2">
+              <!-- JSで技ボタンを追加します -->
+            </div>
+            <button class="btn btn-cyber border-red-cyber mt-3" id="back-to-breathing">← 呼吸法選択に戻る</button>
+          </div>
+        </div>
+
+    </main>
+  </div>
+</div>
