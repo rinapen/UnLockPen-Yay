@@ -60,7 +60,7 @@ app.use("/api/agora-cache-api", agoraCacheApiRouter);
 app.use("/api/music-api", musicApiRouter);
 
 app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}`);
+    console.log(`ctrl+クリックで開いてください ⇒ http://localhost:${PORT}`);
 });
 
 (async () => {

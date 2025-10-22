@@ -419,8 +419,8 @@ body {
   }
   
   .participant-avatar {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     object-fit: cover;
     border-radius: 8px; /* ✅ 角丸四角にする */
   }
@@ -581,8 +581,8 @@ body {
 
 .avatar-wrapper {
   position: relative;
-  width: 72px;
-  height: 72px;
+  width: 48px;
+  height: 48px;
 }
 
 .user-avatar {
@@ -1177,7 +1177,8 @@ body {
 
 .technique-btn.playing {
   animation: techniqueGlow 0.5s ease-in-out;
-=======
+}
+
 /* 絵文字設定UI */
 .emoji-setup-form {
   background: rgba(17, 17, 17, 0.8);
@@ -1424,5 +1425,4 @@ body {
   background: rgba(220, 53, 69, 0.3);
   border-color: rgba(220, 53, 69, 0.6);
   color: #dc3545;
->>>>>>> e9045b0eba8400a3564ee5a0bc7a01d2a7e361a2
 }

@@ -5,27 +5,22 @@ import AgoraRTC, {
 import AgoraRTM, { RtmChannel, RtmClient } from "agora-rtm-sdk";
 import { botStatusResponse } from "./types";
 import { playTrack, sendMessage, sendEmoji } from "../utils/agoraActions";
-<<<<<<< HEAD
 import { NotificationManager } from "../utils/notificationManager";
 import { MicPermissionChecker } from "../utils/micPermissionChecker";
 import { handleJakiMode } from "./mode/jaki";
-import handleShingekiMode from "./mode/beruma";
+
 import { handleBankaiMode, handleManabunMode } from "./mode/kamex";
 import handleMakinoMode from "./mode/makino";
 import { handleGojoMode, handleMusicMode, handleEdenMode } from "./mode/rinapen";
 import { handleWiruMode } from "./mode/wiru";
 import { handleKimetsuMode } from "./mode/kimetsu";
-=======
-import { handleBerumaMode, handleMusicMode } from "./mode/beruma";
-import { NotificationManager } from "../utils/notificationManager";
-import { MicPermissionChecker } from "../utils/micPermissionChecker";
+import handleShingekiMode from "./mode/beruma";
 import { showBotSelector } from "../ui/botSelector";
 import { participantManager } from "../ui/participantDisplay";
->>>>>>> e9045b0eba8400a3564ee5a0bc7a01d2a7e361a2
 
 let bot_id = "";
 
-export function setupFuckBotUI(rtcClient, rtmChannel) {
+export function setupFuckBotUI(rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel) {
   const container = document.getElementById("fuck-bot-ui");
   const buttonsDiv = document.getElementById("emoji-buttons");
 
@@ -112,13 +107,9 @@ export function setupFuckBotUI(rtcClient, rtmChannel) {
   });
 }
 
-<<<<<<< HEAD
 export async function joinCall(conference_call_id: string, mode: string): Promise<void> {
   const notificationManager = NotificationManager.getInstance();
   
-=======
-export async function joinCall(conference_call_id: string, mode: 'music' | 'fuck' | 'kuso'): Promise<void> {
->>>>>>> e9045b0eba8400a3564ee5a0bc7a01d2a7e361a2
   try {
     console.log(`通話 ${conference_call_id} への参加処理を開始します`);
 
@@ -203,21 +194,6 @@ export async function joinCall(conference_call_id: string, mode: 'music' | 'fuck
     }
     rtcClient.enableAudioVolumeIndicator();
 
-<<<<<<< HEAD
-    // 全モードでマイクをパブリッシュして通話音声を聞けるようにする
-    const micStatus = await MicPermissionChecker.checkMicStatus();
-    if (!micStatus.available) {
-      console.warn("マイクが利用できません:", micStatus.reason);
-      notificationManager.showWarning(`マイクが利用できません: ${micStatus.reason}。絵文字送信モードのみで動作します。`);
-    } else {
-      try {
-        const localTrack: IMicrophoneAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-        await rtcClient.publish([localTrack]);
-        console.log("マイクトラックをパブリッシュしました");
-      } catch (micError) {
-        console.warn("マイクトラックの作成に失敗しました。絵文字送信モードのみで動作します。", micError);
-        notificationManager.showWarning("マイクトラックの作成に失敗しました。絵文字送信モードのみで動作します。");
-=======
     // 通常参加が成功した場合、バックエンドで既にキャッシュに保存済み
     if (!useCache) {
       console.log(`ボット ${botId} の情報はバックエンドでキャッシュに保存されました`);
@@ -232,18 +208,35 @@ export async function joinCall(conference_call_id: string, mode: 'music' | 'fuck
       mode: mode
     });
 
-    if (mode === "kuso") {
-      await handleBerumaMode(botId, rtmChannel, rtcClient);
+    if (mode === "shingeki") {
+      await handleShingekiMode(botId, rtmChannel, rtcClient);
+    } else if (mode === "jaki") {
+      await handleJakiMode(botId, rtmChannel, rtcClient);
+    } else if (mode === "bankai") {
+      await handleBankaiMode(botId, rtmChannel, rtcClient);
+    } else if (mode === "manabun") {
+      await handleManabunMode(botId, rtmChannel, rtcClient);
+    } else if (mode === "makino") {
+      await handleMakinoMode(botId, rtmChannel, rtcClient);
+    } else if (mode === "gojo") {
+      await handleGojoMode(botId, rtmChannel, rtcClient);
     } else if (mode === "music") {
       await handleMusicMode(botId, rtmChannel, rtcClient);
+    } else if (mode === "wiru") {
+      await handleWiruMode(botId, rtmChannel, rtcClient);
+    } else if (mode === "eden") {
+      await handleEdenMode(botId, rtmChannel, rtcClient);
+    } else if (mode === "kimetsu") {
+      console.log("鬼滅モードが実行されています。mode値:", mode);
+      handleKimetsuMode(botId, rtcClient, rtmChannel);
     } else if (mode === "fuck") {
-      setupFuckBotUI(rtcClient,rtmChannel);
+      console.log("fuckモードが実行されています");
+      setupFuckBotUI(rtcClient, rtmChannel);
       
       // マイクの状態を事前チェック
       const micStatus = await MicPermissionChecker.checkMicStatus();
       if (!micStatus.available) {
         console.warn("マイクが利用できません:", micStatus.reason);
-        const notificationManager = NotificationManager.getInstance();
         notificationManager.showWarning(`マイクが利用できません: ${micStatus.reason}。絵文字送信モードのみで動作します。`);
       } else {
         try {
@@ -251,37 +244,9 @@ export async function joinCall(conference_call_id: string, mode: 'music' | 'fuck
           await rtcClient.publish([localTrack]);
         } catch (micError) {
           console.warn("マイクトラックの作成に失敗しました。絵文字送信モードのみで動作します。", micError);
-          const notificationManager = NotificationManager.getInstance();
           notificationManager.showWarning("マイクトラックの作成に失敗しました。絵文字送信モードのみで動作します。");
         }
->>>>>>> e9045b0eba8400a3564ee5a0bc7a01d2a7e361a2
       }
-    }
-
-    if (mode === "shingeki") {
-      await handleShingekiMode(bot_id, rtmChannel, rtcClient);
-    } else if (mode === "jaki") {
-      await handleJakiMode(bot_id, rtmChannel, rtcClient);
-    } else if (mode === "bankai") {
-      await handleBankaiMode(bot_id, rtmChannel, rtcClient);
-    } else if (mode === "manabun") {
-      await handleManabunMode(bot_id, rtmChannel, rtcClient);
-    } else if (mode === "makino") {
-      await handleMakinoMode(bot_id, rtmChannel, rtcClient);
-    } else if (mode === "gojo") {
-      await handleGojoMode(bot_id, rtmChannel, rtcClient);
-    } else if (mode === "music") {
-      await handleMusicMode(bot_id, rtmChannel, rtcClient);
-    } else if (mode === "wiru") {
-      await handleWiruMode(bot_id, rtmChannel, rtcClient);
-    } else if (mode === "eden") {
-      await handleEdenMode(bot_id, rtmChannel, rtcClient);
-    } else if (mode === "kimetsu") {
-      console.log("鬼滅モードが実行されています。mode値:", mode);
-      handleKimetsuMode(bot_id, rtcClient, rtmChannel);
-    } else if (mode === "fuck") {
-      console.log("fuckモードが実行されています");
-      setupFuckBotUI(rtcClient,rtmChannel);
     }
 
     rtcClient.on("user-published", async (user, mediaType) => {
@@ -461,7 +426,7 @@ async function getParticipatingBots(conferenceCallId: string): Promise<string[]>
 }
 
 // 選択されたボットで参加
-async function joinCallWithSelectedBots(conferenceCallId: string, selectedBotIds: string[], mode: 'music' | 'fuck' | 'kuso'): Promise<void> {
+async function joinCallWithSelectedBots(conferenceCallId: string, selectedBotIds: string[], mode: string): Promise<void> {
   try {
     console.log(`選択されたボットで参加開始: ${selectedBotIds.join(', ')}`);
     
@@ -515,7 +480,7 @@ async function joinCallWithSelectedBots(conferenceCallId: string, selectedBotIds
 }
 
 // 複数ボットで参加（従来の機能）
-export async function joinCallWithMultipleBots(conferenceCallId: string, mode: 'music' | 'fuck' | 'kuso', botCount: number = 1): Promise<void> {
+export async function joinCallWithMultipleBots(conferenceCallId: string, mode: string, botCount: number = 1): Promise<void> {
   try {
     const cachedBots = await getCachedBots(conferenceCallId);
     const availableBotIds = cachedBots.map(bot => bot.bot_user_id);
@@ -538,7 +503,7 @@ export async function joinCallWithMultipleBots(conferenceCallId: string, mode: '
 }
 
 // キャッシュされたボットで参加
-async function joinCallWithCachedBot(conferenceCallId: string, botId: string, mode: 'music' | 'fuck' | 'kuso'): Promise<{ agoraInfo: any }> {
+async function joinCallWithCachedBot(conferenceCallId: string, botId: string, mode: string): Promise<{ agoraInfo: any }> {
   const cachedBotInfo = await getCachedBotInfo(conferenceCallId, botId);
   if (!cachedBotInfo) {
     throw new Error(`ボット ${botId} のキャッシュ情報が見つかりません`);
@@ -557,10 +522,27 @@ async function joinCallWithCachedBot(conferenceCallId: string, botId: string, mo
   await rtcClient.join(APP_ID, agora_channel, agora_channel_token, conference_call_user_uuid);
   rtcClient.enableAudioVolumeIndicator();
 
-  if (mode === "kuso") {
-    await handleBerumaMode(botId, rtmChannel, rtcClient);
+  // モードに応じた処理を実行
+  if (mode === "shingeki") {
+    await handleShingekiMode(botId, rtmChannel, rtcClient);
+  } else if (mode === "jaki") {
+    await handleJakiMode(botId, rtmChannel, rtcClient);
+  } else if (mode === "bankai") {
+    await handleBankaiMode(botId, rtmChannel, rtcClient);
+  } else if (mode === "manabun") {
+    await handleManabunMode(botId, rtmChannel, rtcClient);
+  } else if (mode === "makino") {
+    await handleMakinoMode(botId, rtmChannel, rtcClient);
+  } else if (mode === "gojo") {
+    await handleGojoMode(botId, rtmChannel, rtcClient);
   } else if (mode === "music") {
     await handleMusicMode(botId, rtmChannel, rtcClient);
+  } else if (mode === "wiru") {
+    await handleWiruMode(botId, rtmChannel, rtcClient);
+  } else if (mode === "eden") {
+    await handleEdenMode(botId, rtmChannel, rtcClient);
+  } else if (mode === "kimetsu") {
+    handleKimetsuMode(botId, rtcClient, rtmChannel);
   } else if (mode === "fuck") {
     setupFuckBotUI(rtcClient, rtmChannel);
   }

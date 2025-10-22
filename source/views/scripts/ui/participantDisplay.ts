@@ -4,7 +4,7 @@ export interface ParticipantInfo {
   agoraInfo?: any;
   joined_at: string;
   status: 'connected' | 'disconnected' | 'error' | 'joining';
-  mode: 'music' | 'fuck' | 'kuso';
+  mode: string;
   isExternal?: boolean; // 外部ユーザー（通話検索で見つかったユーザー）
 }
 
@@ -300,11 +300,20 @@ class ParticipantManager {
   }
 
   // モードテキストを取得
-  private getModeText(mode: ParticipantInfo['mode']): string {
+  private getModeText(mode: string): string {
     switch (mode) {
       case 'music': return '🎪';
       case 'fuck': return '👂';
       case 'kuso': return '巨';
+      case 'shingeki': return '巨';
+      case 'jaki': return '邪';
+      case 'bankai': return '卍';
+      case 'manabun': return '学';
+      case 'makino': return '巻';
+      case 'gojo': return '五';
+      case 'wiru': return 'W';
+      case 'eden': return 'E';
+      case 'kimetsu': return '鬼';
       default: return '❓';
     }
   }

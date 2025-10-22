@@ -2,6 +2,7 @@ import { joinCall, generateUserUUIDs } from '../agora/joinCall';
 import { ConferenceCall } from '../agora/types';
 import { switchToJoinedViewUI } from '../utils/rtm';
 import { participantManager } from '../ui/participantDisplay';
+import { NotificationManager } from '../utils/notificationManager';
 
 
 let result: HTMLElement | null = null;
@@ -85,7 +86,6 @@ export function displayConferenceDetails(conference: ConferenceCall): void {
     </div>
   `;
 
-<<<<<<< HEAD
   document.getElementById('joinButton')?.addEventListener('click', async () => {
     await handleJoinClick(conference.id, conference);
   });
@@ -167,86 +167,8 @@ function getBotTypeName(botType: string): string {
     case 'wiru': return 'WiruBOT';
     case 'eden': return 'EdenBOT';
     case 'shingeki': return 'ShingekiBOT';
+    case 'kimetsu': return 'KimetsuBOT';
     default: return 'BOT';
-=======
-  // 参加ボタンのイベントリスナーを設定
-  const joinButton = document.getElementById('joinButton') as HTMLButtonElement;
-  if (joinButton) {
-    // イベントリスナーを追加
-    joinButton.addEventListener('click', async (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      
-      console.log('参加ボタンがクリックされました - handleJoinClickを実行します');
-      await handleJoinClick(conference.id, conference);
-    });
-    console.log('参加ボタンのイベントリスナーが設定されました');
-  } else {
-    console.error('参加ボタンが見つかりません');
-  }
-}
-
-async function handleJoinClick(conference_call_id: string, conference: ConferenceCall): Promise<void> {
-  console.log('=== handleJoinClick関数が実行されました ===');
-  try {
-    const participantCountElement = document.getElementById('participantCount') as HTMLSelectElement;
-    
-    const selectedCount = parseInt(participantCountElement.value, 10);
-    if (isNaN(selectedCount) || selectedCount <= 0) throw new Error('Invalid participant count selected.');
-
-    const botType = (document.getElementById('botTypeHidden') as HTMLInputElement)?.value || 'kuso';
-
-    console.log(`参加処理開始: 通話ID=${conference_call_id}, ボット数=${selectedCount}, モード=${botType}`);
-
-    const userUUIDs = generateUserUUIDs(selectedCount);
-
-    for (let i = 0; i < userUUIDs.length; i++) {
-      const userUUID = userUUIDs[i];
-      console.log(`ボット ${i + 1}/${selectedCount} の参加処理中...`);
-      
-      if (botType === 'music') {
-        await joinCall(conference_call_id, 'music');
-      } else if (botType === 'fuck') {
-        await joinCall(conference_call_id, 'fuck');
-      } else {
-        await joinCall(conference_call_id, 'kuso');
-      }
-      
-      // 複数ボットの場合は少し待機
-      if (i < userUUIDs.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
-    }
-
-    console.log('すべてのボットの参加処理が完了しました');
-    
-    // 成功メッセージを表示（既存のUIは保持）
-    if (result) {
-      // 既存のコンテンツを保持し、成功メッセージを追加
-      const existingContent = result.innerHTML;
-      const successMessage = `
-        <div class="conference-card neon-panel card mt-4 p-3">
-          <div class="text-center">
-            <h5 class="text-success mb-3">
-              <i class="fas fa-check-circle me-2"></i>参加完了
-            </h5>
-            <p class="text-white">ボットが通話に参加しました</p>
-          </div>
-        </div>
-      `;
-      
-      result.innerHTML = existingContent + successMessage;
-    } else {
-      console.error('result要素が見つかりません');
-    }
-
-  } catch (err) {
-    console.error('Error joining conference call:', err);
-    
-    // エラーメッセージを詳細に表示
-    const errorMessage = err instanceof Error ? err.message : '不明なエラー';
-    alert(`通話への参加に失敗しました。\nエラー: ${errorMessage}`);
->>>>>>> e9045b0eba8400a3564ee5a0bc7a01d2a7e361a2
   }
 }
 
