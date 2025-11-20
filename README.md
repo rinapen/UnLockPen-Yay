@@ -1,4 +1,4 @@
-# UnLockPen-Yay (りなぺん)
+# UnLockPen-Yay
 
 Yay!（旧・ペントーク）のカンファレンス機能を補助し、複数のBOTアカウントを一括で制御できるモデレーション支援ツールです。フロントエンド（EJS + Webpack）とバックエンド（Express + MongoDB）で構成されています。
 
