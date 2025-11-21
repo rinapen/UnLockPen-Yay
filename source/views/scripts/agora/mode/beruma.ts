@@ -1,47 +1,36 @@
-import AgoraRTC, {
-  IAgoraRTCClient,
-  IBufferSourceAudioTrack,
-  IMicrophoneAudioTrack,
-} from "agora-rtc-sdk-ng";
+import { IAgoraRTCClient } from "agora-rtc-sdk-ng";
 import { RtmChannel } from "agora-rtm-sdk";
-import { playTrack, sendEmoji, sendMessage } from "../../utils/agoraActions";
+import { AgoraActionManager } from "../../utils/agoraActionManager";
 import { MusicManager } from "../../utils/musicManager";
-import { EmojiConfigManager } from "../../ui/emojiConfigHandler";
+// import { EmojiConfigManager } from "../../ui/emojiConfigHandler"; (2025年11月から廃止)
 
 export default async function handleShingekiMode(bot_id, rtmChannel: RtmChannel, rtcClient: IAgoraRTCClient) {
-  const firstTrack = await playTrack("/assets/audio/beruma/first.wav", false, 1000, rtcClient);
+  const agoraManager = new AgoraActionManager(rtcClient, rtmChannel, bot_id);
+  
+  const sounds = ["/assets/audio/beruma/scream.wav"];
+  agoraManager.handleKickAndMuteSound(sounds);
+  
+  const firstTrack = await agoraManager.playTrack("/assets/audio/beruma/first.wav", false);
+  firstTrack.on("source-state-change", async (state) => {
+    if (state === "stopped") {
 
-    firstTrack.on("source-state-change", async (state) => {
-        if (state === "stopped") {
-        const musicManager = MusicManager.getInstance();
-        const musicUrl = musicManager.getMusicUrl();
-        await playTrack(musicUrl, true, 1000, rtcClient);
+      const musicManager = MusicManager.getInstance();
+      const musicUrl = musicManager.getMusicUrl();
+      await agoraManager.playTrack(musicUrl, true);
 
-        const emojiManager = EmojiConfigManager.getInstance();
-        const emotes = emojiManager.getEmojis();
-        const text = "話をしねえじゃねえか！ふざけんなよ！";
-        let charIndex = 0;
-        let emoteIndex = 0;
-
-        setInterval(() => sendMessage(bot_id, text[charIndex++ % text.length], rtmChannel), 100);
-        setInterval(() => sendEmoji(emotes[emoteIndex++ % emotes.length], rtmChannel),100);
-        setInterval(() => rtmChannel.sendMessage({ text: `requestLiftAudioMute` }), 50);
-        setTimeout(() => {
-            sendMessage(bot_id, "موتوا أيها الأوغاد", rtmChannel);
-        }, 300);
-        }
-    });
-
-  rtmChannel.on("ChannelMessage", async (message, memberId, messageProps) => {
-    const msgText = message.text;
-    if (typeof msgText === "string") {
-      const sounds = [
-        "/assets/audio/beruma/scream.wav",
-      ];
-      const sound = sounds[Math.floor(Math.random() * sounds.length)];
-      if (msgText.startsWith("kick") || msgText.startsWith("muteAudio")) {
-        await playTrack(sound, false, 1000, rtcClient);
-      }
+      // 枠チャットにループでメッセージを送信
+      let charIndex: number = 0;
+      const message = "話をしねえじゃねえか！ふざけんなよ！";
+      setInterval(() => agoraManager.sendMessage(message[charIndex++ % message.length]), 100);
+      
+      // 枠にループで絵文字を送信 (2025年11月から廃止)
+      // let emoteIndex: number = 0;
+      // const emojiManager: EmojiConfigManager = EmojiConfigManager.getInstance();
+      // const emotes: string[] = emojiManager.getEmojis();
+      // setInterval(() => agoraManager.sendEmoji(emotes[emoteIndex++ % emotes.length]), 100);
+      
+      // 枠主にミュート解除申請を送信
+      setInterval(() => agoraManager.requestLiftAudioMute(), 50);
     }
   });
 }
