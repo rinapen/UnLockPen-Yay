@@ -14,7 +14,7 @@ import yayApiRouter from "./routes/api/yay-api";
 import botApiRouter from "./routes/api/bot-api";
 import agoraApiRouter from './routes/api/agora-api';
 import agoraCacheApiRouter from './routes/api/agora-cache-api';
-import musicApiRouter from './routes/api/sound-api';
+import soundApiRouter from './routes/api/sound-api';
 import { connectDB } from "./lib/mongodb";
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
@@ -28,6 +28,7 @@ app.use(expressLayouts);
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.set("views", path.join(__dirname, "../source/views/ejs"));
 app.set("view engine", "ejs");
 app.set("layout", "layout"); 
@@ -44,7 +45,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
       res.locals.manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
     } catch (err) {
       console.error('[manifest] 読み込み失敗:', err);
-      res.locals.manifest = {}; // fallback
+      res.locals.manifest = {};
     }
     next();
 });
@@ -57,12 +58,12 @@ app.use("/yay-api", yayApiRouter);
 app.use("/api/bot-api", botApiRouter);
 app.use("/api/agora-api", agoraApiRouter);
 app.use("/api/agora-cache-api", agoraCacheApiRouter);
-app.use("/api/music-api", musicApiRouter);
+app.use("/api/sound-api", soundApiRouter);
 
 app.listen(PORT, () => {
     console.log(`ctrl+クリックで開いてください ⇒ http://localhost:${PORT}`);
 });
 
 (async () => {
-  await connectDB(); // ← ここで1回だけ接続
+  await connectDB();
 })();
