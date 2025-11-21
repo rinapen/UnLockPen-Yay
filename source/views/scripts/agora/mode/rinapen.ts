@@ -1,97 +1,50 @@
-import {
-  IAgoraRTCClient,
-} from "agora-rtc-sdk-ng";
+import { IAgoraRTCClient } from "agora-rtc-sdk-ng";
 import { RtmChannel } from "agora-rtm-sdk";
-import { playTrack, sendEmoji, sendMessage } from "../../utils/agoraActions";
+import { AgoraActionManager } from "../../utils/agoraActionManager";
 
-export async function handleGojoMode(bot_id, rtmChannel: RtmChannel, rtcClient: IAgoraRTCClient){
-  const firstTrack = await playTrack("/assets/audio/rinapen/first.wav", false, 1000, rtcClient);
+export async function handleGojoMode(rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel, botId: string){
+  const agoraActionManager = new AgoraActionManager(rtcClient, rtmChannel, botId);
+  const sounds = [
+    "/assets/audio/rinapen/kick/atattenai.mp3",
+  ];
+  agoraActionManager.handleKickAndMuteSound(sounds);
 
-  const emotes = ["領", "域", "展", "開"];
-  const extraEmotes = ["無", "量", "空", "処"];
-  // const extraEmotes = ["鼻", "巨", "大", "🐷", "み", "ゃ", "お","し","ま"];
-  function sendSequentialEmojis(emotes, delay, channel, initialDelay = 0) {
-    setTimeout(() => {
-      emotes.forEach((emote, index) => {
-        setTimeout(() => {
-          sendEmoji(emote, channel);
-        }, delay * index);
-      });
-    }, initialDelay);
-  }
+  const firstTrack = await agoraActionManager.playTrack("/assets/audio/rinapen/first.wav");
 
-  sendSequentialEmojis(emotes, 300, rtmChannel, 1000);
+  const firstEmotes = ["領", "域", "展", "開"];
+  const secondEmotes = ["無", "量", "空", "処"];
 
-  sendSequentialEmojis(extraEmotes, 300, rtmChannel, 3200);
+  sendSequentialEmojis(agoraActionManager, firstEmotes, 300, 1000);
+
+  sendSequentialEmojis(agoraActionManager, secondEmotes, 300, 3200);
 
   setTimeout(() => {
-
-    sendAcceleratingNumbers(rtmChannel, 1, 300);
+    sendAcceleratingNumbers(agoraActionManager, 1, 300);
   }, 5500);
-
-  function sendAcceleratingNumbers(channel, start = 1, initialDelay = 2000) {
-    let count = start;
-    let delay = initialDelay;
-    const minDelay = 50;
-
-    async function sendNext() {
-      try {
-        const digits = String(count++);
-        
-        for (const char of digits) {
-          await sendEmoji(char, channel);
-        }
-
-        delay *= 0.85;
-        if (delay < minDelay) delay = minDelay;
-
-        setTimeout(sendNext, delay);
-      } catch (err) {
-        console.error("送信エラー:", err);
-        // setTimeout(sendNext, 1000); // 必要なら再送ロジック
-      }
-    }
-
-    sendNext();
-  }
 
   firstTrack.on("source-state-change", async (state) => {
     if (state === "stopped") {
-        await playTrack("/assets/audio/rinapen/second.wav", true, 1000, rtcClient);
-      const text = "見える…聞こえる…感じる…止まらない…全ての情報が…永遠に流れ込む…君はもう動けない…";
-      const emotes = ["🌀", "♾️", "👁️", "💫", "🧠", "🕳️", "🕰️", "📡", "🔁", "🧿", "🖤", "🪐"];
-      // const emotes = ["上", "野", "え", "い", "と", ]
       let charIndex = 0;
       let emoteIndex = 0;
-      setInterval(() => sendMessage(bot_id, text[charIndex++ % text.length], rtmChannel), 100);
-      setInterval(() => sendEmoji(emotes[emoteIndex++ % emotes.length], rtmChannel), 50);
-      setInterval(() => rtmChannel.sendMessage({ text: `requestLiftAudioMute` }), 50);
+      const message = "見える…聞こえる…感じる…止まらない…全ての情報が…永遠に流れ込む…君はもう動けない…";
+      const emotes = ["🌀", "♾️", "👁️", "💫", "🧠", "🕳️", "🕰️", "📡", "🔁", "🧿", "🖤", "🪐"];
+
+      setInterval(() => agoraActionManager.sendMessage(message[charIndex++ % message.length]), 100);
+      setInterval(() => agoraActionManager.sendEmoji(emotes[emoteIndex++ % emotes.length]), 50);
+      setInterval(() => agoraActionManager.requestLiftAudioMute(), 50);
+      await agoraActionManager.playTrack("/assets/audio/rinapen/second.wav", true);
     }
   });
-  rtmChannel.on("ChannelMessage", async (message, memberId, messageProps) => {
-    const msgText = message.text;
-
-    if (typeof msgText === "string") {
-      const sounds = [
-        "/assets/audio/rinapen/kick/atattenai.mp3",
-      ];
-      const sound = sounds[Math.floor(Math.random() * sounds.length)];
-
-      if (msgText.startsWith("kick") || msgText.startsWith("muteAudio")) {
-        await playTrack(sound, false, 500, rtcClient);
-      }
-    }
-  });
-
 };
 
-export const handleMusicMode = async (bot_id: string, rtmChannel: RtmChannel, rtcClient: IAgoraRTCClient) => {
-  const send = (t: string) => sendMessage(bot_id, t, rtmChannel);
-  const emoji = (e: string) => sendEmoji(e, rtmChannel);
+export const handleAmazingCircusMode = async (rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel, botId: string) => {
+  const agoraActionManager = new AgoraActionManager(rtcClient, rtmChannel, botId);
+  const send = (t: string) => agoraActionManager.sendMessage(t);
+  const emoji = (e: string) => agoraActionManager.sendEmoji(e);
 
-  const firstTrack = await playTrack("/assets/audio/rinapen/circus/amazing.m4a", false, 100, rtcClient);
+  const firstTrack = await agoraActionManager.playTrack("/assets/audio/rinapen/circus/amazing.m4a");
   firstTrack.on("source-state-change", async () => {
-    await playTrack("/assets/audio/rinapen/circus/everyday.m4a", true, 100, rtcClient);
+    await agoraActionManager.playTrack("/assets/audio/rinapen/circus/everyday.m4a", true);
   });
 
   setTimeout(async () => {
@@ -198,11 +151,13 @@ export const handleMusicMode = async (bot_id: string, rtmChannel: RtmChannel, rt
   }, 11000);
 };
 
-export const handleEdenMode = async (bot_id: string, rtmChannel: RtmChannel, rtcClient: IAgoraRTCClient) => {
-  const send = (t: string) => sendMessage(bot_id, t, rtmChannel);
-  const emoji = (e: string) => sendEmoji(e, rtmChannel);
+export const handleEdenPachinkoMode = async (rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel, botId: string) => {
+  const agoraManager = new AgoraActionManager(rtcClient, rtmChannel, botId);
+ 
+  const send = (t: string) => agoraManager.sendMessage(t);
+  const emoji = (e: string) => agoraManager.sendEmoji(e);
 
-  const firstTrack = await playTrack("/assets/audio/rinapen/eden/first.wav", false, 100, rtcClient);
+  await agoraManager.playTrack("/assets/audio/rinapen/eden/first.wav", false);
 
   setTimeout(async () => {
   for (let i = 0; i < 30; i++) {
@@ -323,3 +278,38 @@ export const handleEdenMode = async (bot_id: string, rtmChannel: RtmChannel, rtc
     }, 1100);
   }, 900);
 };
+
+function sendSequentialEmojis(agoraActionManager: AgoraActionManager, emotes: string[], delay: number, initialDelay = 0) {
+  setTimeout(() => {
+    emotes.forEach((emote, index) => {
+      setTimeout(() => {
+        agoraActionManager.sendEmoji(emote);
+      }, delay * index);
+    });
+  }, initialDelay);
+}
+
+function sendAcceleratingNumbers(agoraManager: AgoraActionManager, start = 1, initialDelay = 2000) {
+  let count = start;
+  let delay = initialDelay;
+  const minDelay = 50;
+
+  sendNext(agoraManager, count, delay, minDelay);
+}
+
+async function sendNext(agoraManager: AgoraActionManager, count: number, delay: number, minDelay: number) {
+  try {
+    const digits = String(count++);
+    
+    for (const char of digits) {
+      await agoraManager.sendEmoji(char);
+    }
+
+    delay *= 0.85;
+    if (delay < minDelay) delay = minDelay;
+
+    setTimeout(sendNext, delay);
+  } catch (err) {
+    console.error("送信エラー:", err);
+  }
+}
