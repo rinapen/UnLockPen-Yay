@@ -2,6 +2,8 @@ import { setupBotTypeSelector } from './ui/botTypeSelector';
 import { setupIdInputHandler } from './ui/idInputHandler';
 import { handleSearch } from './handlers/handleSearch';
 import { setupCyberSelectors } from './handlers/displayConferenceDetails';
+import { initializeAudioManager } from './ui/audioManager';
+
 import './pages/joined';
 import './pages/search';
 import '../css/style.css';
@@ -18,5 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
       handleSearch();
     });
   }
+
+  initializeAudioManager();
 });
 
