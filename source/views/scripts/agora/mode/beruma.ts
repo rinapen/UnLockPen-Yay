@@ -4,8 +4,8 @@ import { AgoraActionManager } from "../../utils/agoraActionManager";
 import { MusicManager } from "../../utils/musicManager";
 // import { EmojiConfigManager } from "../../ui/emojiConfigHandler"; (2025年11月から廃止)
 
-export default async function handleShingekiMode(bot_id, rtmChannel: RtmChannel, rtcClient: IAgoraRTCClient) {
-  const agoraManager = new AgoraActionManager(rtcClient, rtmChannel, bot_id);
+export default async function handleShingekiMode(rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel, botId: string) {
+  const agoraManager = new AgoraActionManager(rtcClient, rtmChannel, botId);
   
   const sounds = ["/assets/audio/beruma/scream.wav"];
   agoraManager.handleKickAndMuteSound(sounds);

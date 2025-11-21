@@ -2,15 +2,15 @@ import { IAgoraRTCClient } from "agora-rtc-sdk-ng";
 import { RtmChannel } from "agora-rtm-sdk";
 import { AgoraActionManager } from "../../utils/agoraActionManager";
 
-export default async function handleMakinoMode(rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel, bot_id: string) {
-    const agoraActionManager = new AgoraActionManager(rtcClient, rtmChannel, bot_id);
+export default async function handleMakinoMode(rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel, botId: string) {
+    const agoraActionManager = new AgoraActionManager(rtcClient, rtmChannel, botId);
     const sounds = [
         "/assets/audio/makino/kick.m4a",
     ];
     agoraActionManager.handleKickAndMuteSound(sounds);
     
     const text = "まきの様最強"
-    
+
     let emoteIndex = 0;
     const emotes = ["ま", "き", "の", "様", "最", "強"];
     

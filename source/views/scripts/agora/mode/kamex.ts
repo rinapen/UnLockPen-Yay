@@ -2,8 +2,8 @@ import { RtmChannel } from "agora-rtm-sdk";
 import { IAgoraRTCClient } from "agora-rtc-sdk-ng";
 import { AgoraActionManager } from "../../utils/agoraActionManager";
 
-export async function handleManabunMode(rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel, bot_id: string) {
-  const agoraManager = new AgoraActionManager(rtcClient, rtmChannel, bot_id);
+export async function handleManabunMode(rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel, botId: string) {
+  const agoraManager = new AgoraActionManager(rtcClient, rtmChannel, botId);
   
   const sounds = ["/assets/audio/kamex/fly/kick.wav"];
   agoraManager.handleKickAndMuteSound(sounds);
@@ -44,8 +44,8 @@ export async function handleManabunMode(rtcClient: IAgoraRTCClient, rtmChannel: 
   });
 };
 
-export async function handleBankaiMode(rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel, bot_id: string){
-  const agoraManager = new AgoraActionManager(rtcClient, rtmChannel, bot_id);
+export async function handleBankaiMode(rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel, botId: string){
+  const agoraManager = new AgoraActionManager(rtcClient, rtmChannel, botId);
   
   const sounds = [
     "/assets/audio/kamex/bankai/kick/niisama.wav",

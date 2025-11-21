@@ -6,11 +6,7 @@ function getRandomElement<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-export async function handleJakiMode(
-  bot_id: string,
-  rtmChannel: RtmChannel,
-  rtcClient: IAgoraRTCClient
-) {
+export async function handleJakiMode(rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel, botId: string) {
   const emojis = [
     "⚔️","🗡️","🔪","🪓","🤪","😈","🥴","🤯","🤑","😵",
     "🫠","🤡","💀","👹","👺","🤖","👽","👾","🦾","🦿","🪤",
@@ -37,7 +33,7 @@ export async function handleJakiMode(
     "/assets/audio/jaki/kick/kick3.wav"
   ];
 
-  const agoraManager = new AgoraActionManager(rtcClient, rtmChannel, bot_id);
+  const agoraManager = new AgoraActionManager(rtcClient, rtmChannel, botId);
   agoraManager.handleKickAndMuteSound(kickSounds);
 
   setTimeout(async () => {
