@@ -1,5 +1,5 @@
 import { RtmChannel } from "agora-rtm-sdk";
-import { IAgoraRTCClient, IRemoteAudioTrack } from "agora-rtc-sdk-ng";
+import { IAgoraRTCClient } from "agora-rtc-sdk-ng";
 import { AgoraActionManager } from "../../utils/agoraActionManager";
 
 export async function handleManabunMode(rtcClient: IAgoraRTCClient, rtmChannel: RtmChannel, bot_id: string) {
